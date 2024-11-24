@@ -7,7 +7,7 @@ function repeat(string, nTimes) {
 }
 
 function decorateMessage(string) {
-  const line = repeat("┈✦┈", string.length / 3);
+  const line = repeat("ᯓ", string.length);
   return line + "\n" + string + "\n" + line;
 }
 
@@ -67,9 +67,11 @@ function playGame(startRange, endRange, noOfChances, numberToGuess) {
 
 function showWelcomeMessage(startRange, endRange, noOfChances) {
   console.log(decorateMessage("🔢 WELCOME TO GUESS THE NUMBER 🔢"));
-  console.log("\n👉🏻 INSTRUCTIONS - \n🔸 You have to guess a number in range " + startRange + " to " + endRange +
-    "\n🔸 You have " + noOfChances + " chances to guess it." +
-    "\n🔸 If you guess an invalid number, you will not loose your attempt.\n");
+  const instructions = "\n👉🏻 INSTRUCTIONS -";
+  const inst1 = "\n🔸 You have to guess a number in range " + startRange + " to " + endRange;
+  const inst2 = "\n🔸 You have " + noOfChances + " chances to guess it.";
+  const inst3 = "\n🔸 If you guess an invalid number, you will not loose your attempt.\n";
+  console.log(instructions + inst1 + inst2 + inst3);
   console.log("All the Best!👍\n");
 }
 
