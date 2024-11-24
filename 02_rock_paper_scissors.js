@@ -1,10 +1,6 @@
 const ROCK = 0;
 const PAPER = 5;
 const SCISSORS = 2;
-const tie = decorateMessage("🤝Its a tie!");
-const playerWin = decorateMessage("🏆Congratulations! You won.");
-const compWin = decorateMessage("Ops! You Lost.🤞Better Luck Next Time.");
-const invalid = decorateMessage("❌ Invalid Choice.");
 
 function repeat(string, nTimes) {
   let repeatedString = "";
@@ -18,6 +14,11 @@ function decorateMessage(string) {
   const line = repeat("─", string.length);
   return line + "\n" + string + "\n" + line;
 }
+
+const tie = decorateMessage("🤝Its a tie!");
+const playerWin = decorateMessage("🏆Congratulations! You won.");
+const compWin = decorateMessage("Ops! You Lost.🤞Better Luck Next Time.");
+const invalid = decorateMessage("❌ Invalid Choice.");
 
 function decideWinner(playerChoice, compChoice) {
   if (playerChoice === compChoice) {
@@ -77,6 +78,7 @@ function showPlayerAndComputerChoice(playerChoice, compChoice) {
 
 function startGame() {
   showWelcomeMessage();
+
   const playerChoice = readPlayerChoice();
   const compChoice = generateComputerChoice();
 
