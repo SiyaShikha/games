@@ -35,12 +35,12 @@ function getWinningMessage() {
   return "🥳 Congratulations! You reached the safe destination....🏆🏆🏆";
 }
 
-function createTopLine() {
-  return "┏" + repeat("━━━━┳", 15) + "━━━━" + "┓";
+function createTopLine(length) {
+  return "┏" + repeat("━━━━┳", length - 1) + "━━━━" + "┓";
 }
 
-function createBottomLine() {
-  return "┗" + repeat("━━━━┻", 15) + "━━━━" + "┛";
+function createBottomLine(length) {
+  return "┗" + repeat("━━━━┻", length - 1) + "━━━━" + "┛";
 }
 
 function delay(time) {
@@ -78,10 +78,10 @@ function createIndexRow() {
 function createBoard(position, diceRoll) {
   console.log("\ndice Roll  : " + diceRoll);
   console.log("position🏃🏻‍♂️‍➡️ : " + position + "\n");
-  console.log(createTopLine());
+  console.log(createTopLine(16));
   console.log(createGameFieldRow(position));
   console.log(createIndexRow());
-  console.log(createBottomLine());
+  console.log(createBottomLine(16));
 }
 
 function showBoard(position, diceRoll) {
@@ -93,7 +93,6 @@ function showBoard(position, diceRoll) {
 function foundBomb(position, diceRoll) {
   showBoard(position, diceRoll);
   delay(600000000);
-  console.log("hiii");
   position = 0;
   showBoard(position, diceRoll);
   return position;
@@ -140,14 +139,15 @@ function userWantsToPlayAgain() {
 
 function startGame(position) {
   showWelcomeMessage();
+  prompt("\nHit return to start the Game 👇");
   createBoard(position, " ");
   playGame();
 
-  if (userWantsToPlayAgain()) {
-    return startGame();
+  if (!userWantsToPlayAgain()) {
+    showGoodByeMessage();
+    return;
   }
-
-  showGoodByeMessage();
+  startGame();
 }
 
 startGame(0);
