@@ -1,5 +1,5 @@
 const ROCK = 0;
-const PAPER = 5;
+const PAPER = 1;
 const SCISSORS = 2;
 
 function repeat(string, nTimes) {
@@ -15,33 +15,51 @@ function decorateMessage(string) {
   return line + "\n" + string + "\n" + line;
 }
 
-const tie = decorateMessage("🤝Its a tie!");
-const playerWin = decorateMessage("🏆Congratulations! You won.");
-const compWin = decorateMessage("Ops! You Lost.🤞Better Luck Next Time.");
-const invalid = decorateMessage("❌ Invalid Choice.");
+const DRAWN_MESSAGE = decorateMessage("🤝Its a tie!");
+const PLAYER_WIN_MESSAGE = decorateMessage("🏆Congratulations! You won.");
+const COMP_WIN_MESSAGE = decorateMessage("Ops! You Lost.🤞Better Luck Next Time.");
+const INVALID_MESSAGE = decorateMessage("❌ Invalid Choice.");
+
+const DRAWN = 0;
+const PLAYER_WON = 1;
+const COMPUTER_WON = 2;
 
 function decideWinner(playerChoice, compChoice) {
   if (playerChoice === compChoice) {
-    return tie;
+    return DRAWN;
   }
-  if (playerChoice === ROCK) {
-    return compChoice === PAPER ? compWin : playerWin;
+  if (playerChoice - compChoice === 1 || (playerChoice - compChoice === -2)) {
+    return PLAYER_WON;
   }
-  if (playerChoice === PAPER) {
-    return compChoice === SCISSORS ? compWin : playerWin;
+  return COMPUTER_WON;
+}
+
+function showResult(result) {
+  if (result === DRAWN) {
+    return DRAWN_MESSAGE;
   }
-  if (playerChoice === SCISSORS) {
-    return compChoice === ROCK ? compWin : playerWin;
+
+  if (result === PLAYER_WON) {
+    return PLAYER_WIN_MESSAGE;
   }
+
+  return COMP_WIN_MESSAGE;
+}
+
+function createInstruction(value, category) {
+  return "\n🔹 " + value + " is for " + category;
+}
+
+function showInstruction() {
+  const rock = createInstruction("0", "ROCK✊");
+  const paper = createInstruction("1", "PAPER🖐");
+  const scissors = createInstruction("2", "SCISSORS✌️");
+  console.log("\n👉🏻 INSTRUCTIONS -" + rock + paper + scissors);
 }
 
 function showWelcomeMessage() {
   const welcomeMessage = decorateMessage("🪨🗒 ✂️ Welcome to ROCK PAPER SCISSORS ✂️ 🗒 🪨");
-  const rock = "\n🔹 0️ is for ROCK✊";
-  const paper = "\n🔹 5️ is for PAPER🖐";
-  const scissors = "\n🔹 2️ is for SCISSORS✌️\n";
-
-  console.log(welcomeMessage + "\n👉🏻 INSTRUCTIONS -" + rock + paper + scissors);
+  console.log(welcomeMessage)
 }
 
 function userWantsToPlayAgain() {
@@ -53,21 +71,22 @@ function showGoodByeMessage() {
 }
 
 function readPlayerChoice() {
-  const choice = +prompt("🔴Enter Your Choice (0,5,2) : ");
+  const choice = +prompt("\n🔴Enter Your Choice (0,1,2) : ");
 
   if (choice !== ROCK && choice !== PAPER && choice !== SCISSORS) {
-    console.log(invalid);
+    console.log(INVALID_MESSAGE);
     return readPlayerChoice();
   }
 
   return choice;
 }
 
+function generateRandomNumber(to, from) {
+  return to + Math.floor(Math.random() * (from - to));
+}
+
 function generateComputerChoice() {
-  let choice = Math.floor(Math.random() * 10) % 3;
-  if (choice === 1) {
-    choice = PAPER;
-  }
+  let choice = generateRandomNumber(0, 3);
   return choice;
 }
 
@@ -76,20 +95,23 @@ function showPlayerAndComputerChoice(playerChoice, compChoice) {
   console.log("🌐Computer  : " + compChoice);
 }
 
-function startGame() {
+function playGame() {
   showWelcomeMessage();
+  showInstruction();
 
   const playerChoice = readPlayerChoice();
   const compChoice = generateComputerChoice();
 
   showPlayerAndComputerChoice(playerChoice, compChoice);
-  console.log(decideWinner(playerChoice, compChoice));
+  const winner = decideWinner(playerChoice, compChoice);
+  console.log(showResult(winner));
 
-  if (userWantsToPlayAgain()) {
-    return startGame();
+  if (!userWantsToPlayAgain()) {
+    showGoodByeMessage();
+    return;
   }
 
-  showGoodByeMessage();
+  playGame();
 }
 
-startGame();
+playGame();
