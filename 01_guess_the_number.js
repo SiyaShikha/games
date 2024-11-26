@@ -65,14 +65,17 @@ function playGame(startRange, endRange, noOfChances, numberToGuess) {
   console.log(decorateMessage(getLoosingMessage(numberToGuess)));
 }
 
-function showWelcomeMessage(startRange, endRange, noOfChances) {
-  console.log(decorateMessage("🔢 WELCOME TO GUESS THE NUMBER 🔢"));
+function showInstruction(startRange, endRange, noOfChances) {
   const instructions = "\n👉🏻 INSTRUCTIONS -";
   const inst1 = "\n🔸 You have to guess a number in range " + startRange + " to " + endRange;
   const inst2 = "\n🔸 You have " + noOfChances + " chances to guess it.";
   const inst3 = "\n🔸 If you guess an invalid number, you will not loose your attempt.\n";
   console.log(instructions + inst1 + inst2 + inst3);
   console.log("All the Best!👍\n");
+}
+
+function showWelcomeMessage() {
+  console.log(decorateMessage("🔢 WELCOME TO GUESS THE NUMBER 🔢"));
 }
 
 function showGoodByeMessage() {
@@ -84,10 +87,10 @@ function userWantsToPlayAgain() {
 }
 
 function startGame(startRange, endRange, noOfChances) {
-  showWelcomeMessage(startRange, endRange, noOfChances);
+  showWelcomeMessage();
+  showInstruction(startRange, endRange, noOfChances);
 
   const numberToGuess = generateNumber(startRange, endRange);
-
   playGame(startRange, endRange, noOfChances, numberToGuess);
 
   if (userWantsToPlayAgain()) {
