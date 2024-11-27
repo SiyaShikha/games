@@ -60,6 +60,7 @@ function addSymbol(position) {
 
 function createGameFieldRow(position) {
   let string = "";
+
   for (let index = 0; index <= 15; index++) {
     if (position === index) {
       string += addSymbol(position);
@@ -67,6 +68,7 @@ function createGameFieldRow(position) {
       string += "┃ 🟧 ";
     }
   }
+  
   return string + "┃";
 }
 
