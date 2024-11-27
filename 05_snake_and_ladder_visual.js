@@ -47,28 +47,56 @@ function isLadder(boxNumber) {
   return false;
 }
 
+
+function isSymbolRequired(boxNumber, p1Position, p2Position) {
+  return (boxNumber === p1Position ||
+    boxNumber === p2Position ||
+    boxNumber === 100 ||
+    isSnake(boxNumber) ||
+    isLadder(boxNumber));
+}
+
+function getAlignment(char) {
+  if (char.length === 1) {
+    return "┃     " + char;
+  }
+  if (char.length === 2) {
+    return "┃    " + char;
+  }
+}
+
+function getSymbol(boxNumber, p1Position, p2Position) {
+  if (boxNumber === p1Position) {
+    return getAlignment("🔴");
+  }
+  if (boxNumber === p2Position) {
+    return getAlignment("🟡");
+  }
+  if (boxNumber === 100) {
+    return getAlignment("🏆");
+  }
+  if (isSnake(boxNumber)) {
+    return getAlignment("🐍");
+  }
+  if (isLadder(boxNumber)) {
+    return getAlignment("🪜");
+  }
+}
+
 function createRow(rowNumber, p1Position, p2Position) {
-  let char = "";
+  let string = "";
+
   for (let index = 1; index <= 10; index++) {
     const boxNumber = getBoxNumber(rowNumber, index);
-    if (boxNumber === p1Position) {
-      char += "┃  🔴  ";
-    } else if (boxNumber === p2Position) {
-      char += "┃  🟡  ";
-    } else if (boxNumber === 100) {
-      char += "┃  🏆  ";
-    } else if (isSnake(boxNumber)) {
-      char += "┃  🐍  ";
-    } else if (isLadder(boxNumber)) {
-      char += "┃  🪜  ";
-    } else if (boxNumber < 10) {
-      char += "┃   " + boxNumber + "  ";
+
+    if (isSymbolRequired(boxNumber, p1Position, p2Position)) {
+      string += getSymbol(boxNumber, p1Position, p2Position);
     } else {
-      char += "┃  " + boxNumber + "  ";
+      string += getAlignment(boxNumber + "");
     }
   }
 
-  return char + "┃";
+  return string + "┃";
 }
 
 function createEmptyRow(length) {
