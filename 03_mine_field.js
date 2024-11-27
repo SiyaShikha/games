@@ -26,9 +26,13 @@ function rollTheDice() {
 }
 
 function isBomb(position) {
-  const isStartingBomb = position === 3 || position === 6 || position === 7;
-  const isEndBomb = position === 9 || position === 12 || position === 13;
-  return isStartingBomb || isEndBomb;
+  const bombIndexes = [3, 6, 7, 9, 12, 13];
+  for (let index = 0; index < bombIndexes.length; index++) {
+    if (position === bombIndexes[index]) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function getWinningMessage() {
