@@ -51,13 +51,18 @@ function delay(time) {
   for (let i = 0; i <= time; i++) { }
 }
 
+function addSymbol(position) {
+  if (isBomb(position)) {
+    return "┃ 💣 ";
+  }
+  return "┃ 🏃🏻‍♂️‍➡️ ";
+}
+
 function createGameFieldRow(position) {
   let string = "";
   for (let index = 0; index <= 15; index++) {
-    if (isBomb(index) && position === index) {
-      string += "┃ 💣 ";
-    } else if (position === index) {
-      string += "┃ 🏃🏻‍♂️‍➡️ ";
+    if (position === index) {
+      string += addSymbol(position);
     } else {
       string += "┃ 🟧 ";
     }
