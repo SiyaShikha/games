@@ -51,11 +51,20 @@ function delay(time) {
   for (let i = 0; i <= time; i++) { }
 }
 
+function getAlignedBox(char) {
+  if (char.length === 1) {
+    return "┃  " + char + " ";
+  }
+  if (char.length === 2) {
+    return "┃ " + char + " ";
+  }
+}
+
 function addSymbol(position) {
   if (isBomb(position)) {
-    return "┃ 💣 ";
+    return getAlignedBox("💣");
   }
-  return "┃ 🏃🏻‍♂️‍➡️ ";
+  return getAlignedBox("👩");
 }
 
 function createGameFieldRow(position) {
@@ -65,22 +74,17 @@ function createGameFieldRow(position) {
     if (position === index) {
       string += addSymbol(position);
     } else {
-      string += "┃ 🟧 ";
+      string += getAlignedBox("🟩");
     }
   }
-  
   return string + "┃";
 }
 
 function createIndexRow() {
   let string = "";
 
-  for (let index = 0; index < 10; index++) {
-    string += "┃ " + index + "  ";
-  }
-
-  for (let index = 10; index <= 15; index++) {
-    string += "┃ " + index + " ";
+  for (let index = 0; index <= 15; index++) {
+    string += getAlignedBox(index + "");
   }
 
   return string + "┃";
